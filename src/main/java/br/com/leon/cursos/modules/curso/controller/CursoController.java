@@ -38,11 +38,12 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCurso(@Valid @RequestBody CursoEntity curso){
+    public ResponseEntity<Object> updateCurso(@PathVariable UUID id, @Valid @RequestBody CursoEntity curso){
         try {
-            if(Objects.isNull(curso.getId())){
+            if(Objects.isNull(id)){
                 return ResponseEntity.badRequest().body("The id is required");
             }
+            curso.setId(id);
             CursoEntity result = this.cursoService.saveCurso(curso);
             return ResponseEntity.ok(result);
         }catch (Exception e){
